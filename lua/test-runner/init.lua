@@ -1,16 +1,12 @@
 local M = {}
 
 local term = require("test-runner.util.term")
-
-local function file_exists(file)
-	local stat = vim.uv.fs_stat(file)
-	return stat ~= nil
-end
+local fs = require("test-runner.util.fs")
 
 function M.setup()
 	-- TestRunner command
 	vim.api.nvim_create_user_command('TestRunner', function()
-		local exists = file_exists("Cargo.toml")
+		local exists = fs.file_exists("Cargo.toml")
 		local cmd = {}
 		if exists then
 			cmd = {"cargo", "test"}
