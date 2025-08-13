@@ -1,10 +1,14 @@
 local M = {}
 
-local function open_test_window()
+local function open_test_runner(cmd)
 		local buf = vim.api.nvim_create_buf(false, true)
+		vim.api.nvim_buf_set_option(buf, 'modifiable', false)
+
 		local win = vim.api.nvim_open_win(buf, true, {
 			split = 'right'
 		})
+
+		vim.cmd.terminal(cmd)
 
 		vim.keymap.set('n', 'q', function()
 			vim.api.nvim_win_close(win, false)
@@ -14,7 +18,7 @@ end
 function M.setup()
 	-- TestRunner command
 	vim.api.nvim_create_user_command('TestRunner', function()
-		open_test_window()
+		open_test_runner({"echo \"Hello from the terminal\""})
 	end, {})
 
 	-- Setup the keybinding to run the command
