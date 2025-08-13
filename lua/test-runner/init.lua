@@ -24,11 +24,11 @@ function M.setup()
 	-- TestRunner command
 	vim.api.nvim_create_user_command('TestRunner', function()
 		local exists = file_exists("Cargo.toml")
-		local cmd = ""
+		local cmd = {}
 		if exists then
-			cmd = "echo \"found evidence of rust repository\""
+			cmd = {"cargo", "test"}
 		else
-			cmd = "echo \"Hello from the terminal\""
+			cmd = {"echo", "no test harness found"}
 		end
 		open_test_runner(cmd)
 	end, {})
