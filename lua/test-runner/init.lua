@@ -15,10 +15,22 @@ local function open_test_runner(cmd)
 		end, {buffer = buf})
 end
 
+local function file_exists(file)
+	local stat = vim.uv.fs_stat(file)
+	return stat ~= nil
+end
+
 function M.setup()
 	-- TestRunner command
 	vim.api.nvim_create_user_command('TestRunner', function()
-		open_test_runner({"echo \"Hello from the terminal\""})
+		local exists = file_exists("Cargo.toml")
+		local cmd = ""
+		if exists then
+			cmd = "echo \"found evidence of rust repository\""
+		else
+			cmd = "echo \"Hello from the terminal\""
+		end
+		open_test_runner(cmd)
 	end, {})
 
 	-- Setup the keybinding to run the command
