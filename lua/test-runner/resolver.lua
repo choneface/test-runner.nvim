@@ -2,7 +2,8 @@ local M = {}
 
 local fs = require("test-runner.util.fs")
 local detectors = {
-	require("test-runner.detectors.cargo")
+	require("test-runner.detectors.cargo"),
+	require("test-runner.detectors.gradle")
 }
 
 local function build_ctx()
